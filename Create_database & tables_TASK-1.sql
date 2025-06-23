@@ -40,3 +40,18 @@ select * from members_name;
 SELECT * FROM Book;
 SELECT * FROM Borrow;
 SELECT * FROM return_book;
+
+
+-- Entities and Relationships
+--  What is an Entity?
+ -- entity represents a thing or object in the domain. It becomes a table in the database.
+
+-- What is a Relationship?
+-- A relationship shows how two entities are connected
+
+-- Entity       | Description                               
+-- Customer     | A person who purchases products           
+-- Product      | An item available for sale                
+--  Order       | A purchase made by a customer             
+-- Order\_Item  | Each product in an order (many per order) 
+-- Payment      | Payment details for an order              
