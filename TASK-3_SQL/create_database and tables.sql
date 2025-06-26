@@ -1,0 +1,141 @@
+create database library;
+use library;
+
+DROP TABLE IF EXISTS return_book;
+DROP TABLE IF EXISTS Borrow;
+DROP TABLE IF EXISTS Book;
+DROP TABLE IF EXISTS members_name;
+
+-- create 
+
+create table members_name(
+member_id int primary key,
+name varchar(50), 
+email varchar(50),
+contact_no bigint,
+joining_date date );
+
+create table Book(
+book_id int primary key,
+book_name varchar(50),
+author_name varchar(50),
+edition_num int,
+gener varchar(50),
+available_num int);
+
+create table Borrow(
+borrow_id int primary key,
+member_id int,
+book_id int,
+borrow_date date,
+foreign key (member_id) references members_name(member_id),
+foreign key (book_id) references Book(book_id) 
+);
+
+create table return_book(
+return_book_id int primary key,
+return_book_name varchar(100),
+return_date int,
+fine_expands int);
+
+-- insert:
+
+insert into members_name(member_id,name,email,contact_no,joining_date)
+values
+(1, 'Jack' , 'jack@gmail.com' , 7865432043 , '2025-03-23' ),
+(2, 'lilly' , 'lilly01@gmail.com' , 9834672650 , '2024-03-17'),
+(3 , 'mercy' , Null , 7823490541 , "2025-01-23"),
+(4, 'Neha ', 'neha@example.com', NULL, '2024-06-03'); 
+
+insert into Book (book_id, book_name ,author_name, edition_num , gener ,available_num)
+values
+(101, 'Harry Potter', 'J.K. Rowling', 1, 'Fantasy', 5),
+(102, 'I too have a love story', 'ravinder singh', 2, 'Romcom', 10),
+(103, 'Five Point Someone', 'Chetan Bhagat', 1, 'Fiction', 3),
+(104, '1984', 'George Orwell', 3, 'Dystopian', 2);
+
+insert into Borrow (borrow_id ,member_id ,book_id ,borrow_date)
+values
+(1, 1, 101, '2025-03-23'),
+(2, 2, 102, '2024-03-17'),
+(3, 3, 103, '2025-01-23'),
+(4, 4, 104, '2024-06-13');
+
+insert into return_book(return_book_id ,return_book_name ,return_date ,fine_expands)
+values
+(1, 'Harry Potter', 10, 0),
+(2, 'I too have a love story', 28 , 20),
+(3, 'Five Point Someone', NULL, 50),  
+(4, '1984', 7, 0);
+
+-- update:
+
+UPDATE members_name 
+SET email = 'neha.@library.com'
+WHERE member_id = 4;
+
+UPDATE Book
+SET available_num = 5
+WHERE book_id = 102;
+
+UPDATE Borrow
+SET borrow_date = '2025-03-03'
+WHERE member_id = 3; 
+
+-- delete:
+
+DELETE FROM Book
+WHERE book_id = 102;
+
+DELETE FROM Borrow
+WHERE book_id = 104;
+
+select * from members_name;
+SELECT * FROM Book;
+SELECT * FROM Borrow;
+SELECT * FROM return_book;
+
+select member_id , name from members_name;
+select book_name , author_name , gener from Book;
+select return_book_id ,return_book_name , fine_expands from return_book;
+
+-- where
+
+select name,joining_date from members_name where member_id = 4;
+select return_book_name , return_date from return_book where return_book_id = 2;
+select contact_no from members_name where joining_date > '2024-03-17';
+
+-- where and and
+select book_name, book_id from Book 
+where gener = 'Fantasy' AND edition_num = 1;
+
+-- where & OR
+
+select borrow_id , member_id from Borrow
+where book_id = 101 OR book_id = 102;
+
+-- like "%":
+
+select book_id , book_name , author_name from Book
+where book_name LIKE '%H%';
+
+-- between 
+select return_book_name from return_book
+where return_book_id between 1 and 3;
+
+-- order by
+select * from book 
+order by edition_num desc;
+
+select * from borrow
+order by borrow_date asc ;
+
+-- order by limit :
+
+select * from members_name
+order by joining_date limit 2;
+
+select return_book_id, return_book_name from return_book
+where fine_expands > 0 order by fine_expands desc ;
+
+
